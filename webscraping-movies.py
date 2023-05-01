@@ -9,7 +9,7 @@ from openpyxl.styles import Font
 
 
 #webpage = 'https://www.boxofficemojo.com/weekend/chart/'
-webpage = 'https://www.boxofficemojo.com/year/2022/'
+webpage = 'https://www.boxofficemojo.com/year/2023/'
 
 page = urlopen(webpage)			
 
@@ -18,8 +18,7 @@ soup = BeautifulSoup(page, 'html.parser')
 title = soup.title
 
 print(title.text)
-##
-##
-##
-##
+
+table_rows = title.findAll("tr")
+print(table_rows)
 

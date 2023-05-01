@@ -73,9 +73,32 @@ for currentrow in read_ws.iter_rows(min_row=2, max_row=maxR, max_col=maxC):
 summary_row = write_row + 1
 
 write_sheet['B' + str(summary_row)] = 'Total'
+write_sheet['B' + str(summary_row)].font = Font(size=16, bold=True)
+
+write_sheet['C' + str(summary_row)] = '=SUM(C2:C' + str(write_row) + ')'      #SUM(C2:C42)
+
+write_sheet['D' + str(summary_row)] = '=SUM(D2:D' + str(write_row) + ')'      #SUM(D2:D42)
     
 
+summary_row += 1
 
+write_sheet['B' + str(summary_row)] = 'Average'
+write_sheet['B' + str(summary_row)].font = Font(size=16, bold=True)
+
+write_sheet['C' + str(summary_row)] = '=AVERAGE(C2:C' + str(write_row) + ')'      #SUM(C2:C42)
+
+write_sheet['D' + str(summary_row)] = '=AVERAGE(D2:D' + str(write_row) + ')'      #SUM(D2:D42)
+
+write_sheet.column_dimensions['A'].width = 16
+write_sheet.column_dimensions['B'].width = 15
+write_sheet.column_dimensions['C'].width = 15
+write_sheet.column_dimensions['D'].width = 15
+
+for cell in write_sheet['C:C']:
+    cell.number_format = '#,##0'
+
+for cell in write_sheet['D:D']:
+    cell.number_format = u'"$ "#,##0.00'
 
 
 

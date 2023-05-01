@@ -38,22 +38,41 @@ ws['B8'] = '=SUM(B2:B4)'
 write_sheet = wb['Second Sheet']
 
 
-new = xl.load_workbook('ProduceReport.xlsx')
+read_wb = xl.load_workbook('ProduceReport.xlsx')
+read_ws = read_wb['ProduceReport']
 
-produce_sheet = new['ProduceReport']
+maxC = read_ws.max_column
+maxR = read_ws.max_row
+
 
 write_sheet['A1'] = 'Produce'
 write_sheet['B1'] = 'Cost Per Pound'
 write_sheet['C1'] = 'Amt Sold'
 write_sheet['D1'] = 'Total'
 
+write_row = 2
+write_colA = 1
+write_colB = 2
+write_colC = 3
+write_colD = 4
 
 
-for currentrow in produce_sheet.iter_rows(min_row=1, max_row=produce_sheet.max_row, max_col=produce_sheet.max_column):
-    print(currentrow[0].value)
-    print(currentrow[1].value)
-    print(currentrow[2].value)
-    print(currentrow[3].value)
+for currentrow in read_ws.iter_rows(min_row=2, max_row=maxR, max_col=maxC):
+    name = currentrow[0].value
+    cost = float(currentrow[1].value)
+    amt_sold = float(currentrow[2].value)
+    total = float(currentrow[3].value)
+
+    write_sheet.cell(write_row, write_colA).value = name     #order is row, column
+    write_sheet.cell(write_row, write_colB).value = cost
+    write_sheet.cell(write_row, write_colC).value = amt_sold
+    write_sheet.cell(write_row, write_colD).value = total
+
+    write_row += 1
+
+summary_row = write_row + 1
+
+write_sheet['B' + str(summary_row)] = 'Total'
     
 
 

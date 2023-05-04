@@ -68,6 +68,6 @@ for cell in ws[1:1]:
 
 wb.save("BoxOfficeReport.xlsx")
 
-    
+
 
 

@@ -8,7 +8,7 @@ from twilio.rest import Client
 
 
 url = 'https://www.coingecko.com/'
-# Request in case 404 Forbidden error
+
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.3'}
 
 req = Request(url, headers=headers)
@@ -54,17 +54,23 @@ ws['C1'].font = header_font
 ws['D1'].font = header_font
 ws['E1'].font = header_font
 
+ws.column_dimensions['A'].width = 20
+ws.column_dimensions['B'].width = 25
+ws.column_dimensions['C'].width = 20
+ws.column_dimensions['D'].width = 35
+ws.column_dimensions['E'].width = 25
+
 
 for row in range(1, 6):
     td = rows[row].findAll('td')
     number = td[1].text
-    cryptocurrency = td[2].text
+    cryptocurrency = td[2].text + ""
     price = float(td[3].text.replace(",", "").replace("$", ""))
     changed_percent = float(td[5].text.replace("%", ""))
     total_change = round((price * 1 + changed_percent), 2)
     new_price = int(total_change - price)
     if new_price <= -5 or new_price >= 5:
-        text = client.messages.create(to=mycellphone, from_=TwilioNumber, body="A change of $5 has occurred within 24 hours")
+        text = client.messages.create(to=mycellphone, from_=TwilioNumber, body="A change of $5 has occurred")
         print(text.status)
 
     ws['A' + str(row+1)] = number
@@ -72,9 +78,6 @@ for row in range(1, 6):
     ws['C' + str(row+1)] = '$' + str(format(price, ',.2f'))
     ws['D' + str(row+1)] = str(format(changed_percent, ',.2f') + '%') 
     ws['E' + str(row+1)] = '$' + format(total_change, ',.2f')
-
-
-
 
 
 

@@ -55,5 +55,27 @@ ws['D1'].font = header_font
 ws['E1'].font = header_font
 
 
+for row in range(1, 6):
+    td = rows[row].findAll('td')
+    number = td[1].text
+    cryptocurrency = td[2].text
+    price = float(td[3].text.replace(",", "").replace("$", ""))
+    changed_percent = float(td[5].text.replace("%", ""))
+    total_change = round((price * 1 + changed_percent), 2)
+    new_price = int(total_change - price)
+    if new_price <= -5 or new_price >= 5:
+        text = client.messages.create(to=mycellphone, from_=TwilioNumber, body="A change of $5 has occurred within 24 hours")
+        print(text.status)
+
+    ws['A' + str(row+1)] = number
+    ws['B' + str(row+1)] = cryptocurrency
+    ws['C' + str(row+1)] = '$' + str(format(price, ',.2f'))
+    ws['D' + str(row+1)] = str(format(changed_percent, ',.2f') + '%') 
+    ws['E' + str(row+1)] = '$' + format(total_change, ',.2f')
+
+
+
+
+
 
 wb.save("Cryptocurrencies.xlsx")

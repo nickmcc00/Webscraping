@@ -2,6 +2,7 @@ from urllib.request import urlopen, Request
 from bs4 import BeautifulSoup
 import openpyxl as xl
 from openpyxl.styles import Font
+
 import keys
 from twilio.rest import Client
 
